@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { useAppConfig, useLocale } from "@/config/hooks";
+import { useAppConfig } from "@/config/hooks";
 import { Card } from "../ui/card";
 import { cn } from "@/utils";
 import { useIsMobile } from "@/hooks/useMobile";
@@ -10,9 +10,9 @@ const Footer = forwardRef<
     isSettingsOpen: boolean;
   }
 >(({ isSettingsOpen }, ref) => {
-  const { t } = useLocale();
-  const { selectedFooterStyle } = useAppConfig();
+  const { selectedFooterStyle, publicSettings } = useAppConfig();
   const isMobile = useIsMobile();
+  const siteName = publicSettings?.sitename || "本站";
   return (
     <footer
       ref={ref}
@@ -32,24 +32,8 @@ const Footer = forwardRef<
           selectedFooterStyle !== "followContent" ? "rounded-none" : "",
           "p-2 w-full flex items-center justify-center inset-shadow-sm inset-shadow-(color:--accent-a4)"
         )}>
-        <p className="flex justify-center text-sm text-secondary-foreground theme-text-shadow whitespace-pre">
-          {t("footer.poweredBy")}{" "}
-          <a
-            href="https://github.com/komari-monitor/komari"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:text-blue-600 transition-colors">
-            Komari Monitor
-          </a>
-          {" | "}
-          {t("footer.themeBy")}{" "}
-          <a
-            href="https://github.com/Montia37/komari-theme-purcarte"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:text-blue-600 transition-colors">
-            PurCarte
-          </a>
+        <p className="flex justify-center text-sm text-secondary-foreground theme-text-shadow">
+          © {siteName}
         </p>
       </Card>
     </footer>
